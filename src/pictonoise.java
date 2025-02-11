@@ -7,11 +7,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Scanner;
 //Copyright 2025 TBooraem
 public class pictonoise {
 
     public static void pictonoise(String path) throws IOException {
+        Instant now = Instant.now();
         //take in a photograph
         BufferedImage pic = null;
         Scanner readFile = new Scanner(new File(path));
@@ -80,6 +83,8 @@ public class pictonoise {
         for(int sample = 0; sample < buffer.length; sample++){
             //Current time is equal to the sample divided by sample rate
             double time = (double) sample / 44100;
+            //A dumbass AI told me to do this so here we go, thanks Codestral
+            double piTime = 2 * Math.PI * time;
             //temp value
             float hold = 0;
             for(int i = 0; i < height;i++){
@@ -92,8 +97,10 @@ public class pictonoise {
                 It should be possible to add phase, but I don't believe that is necessary for this to work
                 our amplitude is found above, time is also found above, the frequency is just the height of the px times the conversion factor, we height - i so that the image appears right side up.
                 adding all of these points to hold appears to be the same as adding the function together and thus it works
+                TO optimize I think I need to calculate a base set of samples than add a constant to them to simulate the passing time, it should save on math if the hold values can be calculated only a few times
+                problem is I'm stupid so we'll see if I ever figure that out
                  */
-                hold += (float) ( (amp[(int)time][i]) * Math.sin(2*Math.PI * time * (conversions[(int)time][i])));
+                hold += (float) ( (amp[(int)time][i]) * Math.sin(piTime * (conversions[(int)time][i])));
             }
             buffer[sample] = hold;
         }
@@ -119,6 +126,7 @@ public class pictonoise {
         AudioSystem.write(ais, AudioFileFormat.Type.WAVE, out);
         //close to finish task - I think
         ais.close();
-        System.out.println("Complete");
+        Duration dur = Duration.between(now, Instant.now());
+        System.out.println("Complete in " + dur);
     }
 }

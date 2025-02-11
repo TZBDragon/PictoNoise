@@ -1,11 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+        try {
+            createFolders();
+        } catch (IOException ignored){}
         createScreen();
 
     }
+
+    private static void createFolders() throws IOException {
+
+    }
+
     public static void createScreen(){
         //gets the monitor resolution
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -18,7 +27,7 @@ public class Main {
         mainWin.setLocationRelativeTo(null); // Somehow sets window to center of screen
         //Creates the panel that will hold all of the components and set it to the same size as the window
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS)); // Layout is set to box because I want to kill the little people in my magic code machine /s
+        mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS)); // Layout is set to box because I want to kill the little people in my magic code machine /s ??? 11022025 - What did I mean when I wrote this?
         mainPanel.setSize(mainWin.getWidth(),mainWin.getHeight());
         int panH = mainPanel.getHeight();
         int panW = mainPanel.getWidth();
