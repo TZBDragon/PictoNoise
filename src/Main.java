@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class Main {
@@ -32,7 +34,21 @@ public class Main {
         int panH = mainPanel.getHeight();
         int panW = mainPanel.getWidth();
         mainPanel.setBackground(Color.LIGHT_GRAY);
+        JButton loadf = new JButton();
+        JButton gen = new JButton();
+        loadf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+        gen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        mainPanel.add(loadf,gen);
         mainWin.setVisible(true);
     }
 }
